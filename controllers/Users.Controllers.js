@@ -16,7 +16,7 @@ const CreateUser = async (req,res)=>{
           const salt = bcryptjs.genSaltSync(10)
           NewUser.contrasenia = bcryptjs.hashSync(contrasenia, salt)
           const SavedUser = await NewUser.save();
-          res.status(201).json({ msg: 'Producto creado con exito', SavedUser })
+          res.status(201).json({ msg: 'Usuario creado con exito', SavedUser })
     } catch (error) {
         res.status(500).json({ msg: 'Falla en el server', error })
     }
