@@ -1,5 +1,8 @@
 const UsersModel = require ("../models/Users.Schema")
 const bcryptjs = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+
+
 const CreateUser = async (req,res)=>{
     const {nombreUsuario, emailUsuario, contrasenia, role}= req.body
     try {
@@ -19,6 +22,35 @@ const CreateUser = async (req,res)=>{
     }
     
     
+}
+
+
+const LoginUser = async (req,res)=>{
+    try {
+        const {emailUsuario,contrasenia} = req.body
+        const EmailExist = await UsersModel.findOne({emailUsuario})
+        if(!EmailExist){
+            return res.status(400).json({msg: 'Email y/o contraseña incorrecto'})
+        }
+
+        const passCheck = bcryptjs.compareSync(contrasenia, EmailExist.contrasenia)
+
+        if(!passCheck){
+            return res.status(400).json({msg: 'Email y/o contraseña incorrecto'})
+        }
+
+
+        const payload = {
+            idUsuario: EmailExist._id,
+            role: EmailExist.role
+          }
+      
+          const token = jwt.sign(payload, "Grupo1")
+          res.status(200).json({msg:'Logueado', token, role: EmailExist.role, idUsuario: EmailExist._id})
+        
+    } catch (error) {
+        res.status(500).json({ msg: 'Falla en el server', error })
+    }
 }
 
 const GetUsers = async (req,res)=>{
@@ -70,4 +102,5 @@ module.exports = {
     GetOneUser,
     DeleteUser, 
     UpdateUser, 
+    LoginUser,
 }
