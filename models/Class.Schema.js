@@ -43,12 +43,13 @@ const ClaseSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  Usuarios: {
-    type: [String],
-  },
-
+  Usuarios: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'users'
+  }],
   IDProfesor: {
-    type: String, 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'teachers'
   },
 });
 

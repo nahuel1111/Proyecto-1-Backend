@@ -1,4 +1,5 @@
 const UsersModel = require ("../models/Users.Schema")
+const ClassModel = require ("../models/Class.Schema")
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -55,7 +56,7 @@ const LoginUser = async (req,res)=>{
 
 const GetUsers = async (req,res)=>{
     try {
-        const AllUsers = await UsersModell.find()
+        const AllUsers = await UsersModel.find()
         res.status(200).json({ msg: 'Usuarios encontrados', AllUsers })
       } catch (error) {
         res.status(500).json({ msg: 'Falla en el server', error })
@@ -71,20 +72,36 @@ const GetOneUser = async (req,res)=>{
       }
 }
 
-const DeleteUser = async (req,res)=>{
-    try {
-        const Delete= await UsersModel.findOne({ _id: req.params.id})
 
-        if (!Delete) {
-            res.status(400).json({ msg: 'El usuario que intentas borrar no existe en la base de datos' })
-            return
-          }
-          await UsersModel.findByIdAndDelete({ _id: req.params.id })
-          res.status(200).json({ msg: 'Usuario eliminado' })
-    } catch (error) {
-        res.status(500).json({ msg: 'Falla en el server', error })
+    const DeleteUser = async (req, res) => {
+        try {
+            const userId = req.params.id
+            const idClass= await ClassModel.findOne({Usuarios:userId})
+            const userToDelete = await UsersModel.findById(userId);
+            if(idClass){
+                if (!userToDelete) {
+                    return res.status(400).json({ msg: 'El usuario que intentas borrar no existe en la base de datos' });
+                }
+                await UsersModel.findByIdAndDelete(userId)
+                const updatedClase = await ClassModel.findByIdAndUpdate(
+                    idClass._id,
+                    { $pull: { Usuarios: userId } },
+                    { new: true }
+                )
+                res.status(200).json({ msg: 'Usuario eliminado correctamente' });
+            }else{
+                if (!userToDelete) {
+                    return res.status(400).json({ msg: 'El usuario que intentas borrar no existe en la base de datos' });
+                }
+                await UsersModel.findByIdAndDelete(userId)
+                res.status(200).json({ msg: 'Usuario eliminado correctamente' });
+            }
+           
+        } catch (error) {
+            res.status(500).json({ msg: 'Falla en el server', error: error.message });
+        }
     }
-}
+    
 
 const UpdateUser = async (req,res)=>{
     try {
