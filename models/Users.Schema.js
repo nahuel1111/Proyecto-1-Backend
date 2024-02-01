@@ -22,12 +22,17 @@ const UsersSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'clases',
   },
-});
+  Comentario: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comentarios'
+  }],
+
+})
 
 UsersSchema.methods.toJSON = function () {
   const { __v, contrasenia, ...usuario } = this.toObject();
   return usuario;
-};
+}
 
 const UsersModel = mongoose.model('users', UsersSchema);
-module.exports = UsersModel;
+module.exports = UsersModel

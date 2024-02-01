@@ -1,5 +1,6 @@
 const UsersModel = require ("../models/Users.Schema")
 const ClassModel = require ("../models/Class.Schema")
+const mongoose = require ('mongoose')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -111,6 +112,7 @@ const UpdateUser = async (req,res)=>{
         res.status(500).json({ msg: 'Falla en el server', error })
     }
 }
+
 
 
 module.exports = { 
