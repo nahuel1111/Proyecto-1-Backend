@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose')
+const mongoose = require('mongoose');
 
-const UsersSchema = new Schema({
+const UsersSchema = new mongoose.Schema({
   nombreUsuario: {
     type: String,
     required: true,
@@ -8,23 +8,26 @@ const UsersSchema = new Schema({
   emailUsuario: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   contrasenia: {
     type: String,
-    required: true
+    required: true,
   },
   role: {
     type: String,
-    default: 'user'
+    default: 'user',
   },
-
-})
+  Clase: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'clases',
+  },
+});
 
 UsersSchema.methods.toJSON = function () {
-  const { __v, contrasenia, ...usuario } = this.toObject()
-  return usuario
-}
+  const { __v, contrasenia, ...usuario } = this.toObject();
+  return usuario;
+};
 
-const UsersModel = model('users', UsersSchema)
-module.exports = UsersModel
+const UsersModel = mongoose.model('users', UsersSchema);
+module.exports = UsersModel;

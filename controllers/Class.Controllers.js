@@ -1,4 +1,6 @@
 const ClassModel = require('../models/Class.Schema')
+const UsersModel = require('../models/Users.Schema')
+const mongoose = require('mongoose');
 
 
 const createClass = async (req, res) => {
@@ -56,7 +58,56 @@ const DeleteClass = async (req,res)=>{
     }
 }
 
+const addUsuarioToClase = async (req, res) => {
+    try {
+        
+        if (!mongoose.Types.ObjectId.isValid(req.body.Usuarios)) {
+            return res.status(400).json({ msg: 'El ID del usuario proporcionado no es válido' });
+        }
+        const userExist = await UsersModel.findOne({_id:req.body.Usuarios})
+        console.log(userExist)
+        if(!userExist){
+         return   res.status(400).json({ msg: 'el id de usuario que intentas agregar no existe en la base de datos' })
+        }
+        const clase = await ClassModel.findByIdAndUpdate(
+            req.params.id,
+            { $addToSet: { Usuarios: req.body.Usuarios } },
+            { new: true }
+        )
 
+
+
+
+
+
+        res.status(200).json({ msg: 'Usuario agregado correctamente', clase });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Falla en el server', error: error.message });
+    }
+}
+
+const DeleteUserToClass = async (req,res)=>{
+    try {
+        if (!mongoose.Types.ObjectId.isValid(req.body.Usuarios)) {
+            return res.status(400).json({ msg: 'El ID del usuario proporcionado no es válido' });
+        }
+        const userExist = await UsersModel.findOne({_id:req.body.Usuarios})
+        if(!userExist){
+          return  res.status(400).json({ msg: 'el id de usuario que intentas eliminar no existe en la base de datos' })
+        }
+        const clase = await ClassModel.findByIdAndUpdate(
+            req.params.id,
+            { $pull: { Usuarios: req.body.Usuarios } },
+            { new: true }
+        );
+
+  res.status(200).json({ msg: 'Usuario eliminado correctamente', clase });
+    } catch (error) {
+            res.status(500).json({ msg: 'Falla en el server', error: error.message });
+        
+    }
+}
 
 
 
@@ -66,6 +117,7 @@ module.exports = {
     GetOneClass,
     UpdateClass,
     DeleteClass,
-
+    addUsuarioToClase,
+    DeleteUserToClass,
 
   }
