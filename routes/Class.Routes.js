@@ -1,10 +1,10 @@
 const express = require('express')
 const route = express.Router()
 const { createClass, GetClass, GetOneClass, UpdateClass, DeleteClass, addUsuarioToClase,DeleteUserToClass} = require('../controllers/Class.Controllers')
+const multer = require('../middlewars/multer')
 
 
-
-route.post('/', createClass)
+route.post('/', multer.single('imagen'), createClass)
 route.get('/', GetClass)
 route.get('/:id',GetOneClass)
 route.put('/:id',UpdateClass)

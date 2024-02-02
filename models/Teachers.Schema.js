@@ -9,6 +9,9 @@ const TeachersSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    imagen: {
+      type: String,
+    },
   })
   
   const TeachersModel = mongoose.model('teachers', TeachersSchema)

@@ -2,13 +2,13 @@ const express = require('express')
 const route = express.Router()
 const { createTeacher,GetTeachers, GetOneTeacher, DeleteTeacher, UpdateTeacher} = require('../controllers/Teachers.Controllers')
 const auth = require('../middlewars/auth')
+const multer = require('../middlewars/multer')
 
-
-route.post('/', auth('admin'), createTeacher)
-route.get('/', auth('admin'), GetTeachers)
+route.post('/', multer.single('imagen'), createTeacher)
+route.get('/', GetTeachers)
 route.get('/:id', GetOneTeacher)
-route.put('/:id', auth('admin'), UpdateTeacher)
-route.delete('/:id' ,auth('admin'), DeleteTeacher)
+route.put('/:id', UpdateTeacher)
+route.delete('/:id', DeleteTeacher)
 
 
 module.exports = route

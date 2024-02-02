@@ -1,5 +1,5 @@
 const TeachersModel=require('../models/Teachers.Schema')
-
+const cloudinary = require('../helpers/cloudinary')
 
 const createTeacher = async (req,res)=>{
     try{
@@ -8,8 +8,8 @@ const createTeacher = async (req,res)=>{
             res.status(400).json({ msg: 'Algun campo esta vacio' })
             return
           }
-
-          const newTeacher =  TeachersModel({...req.body})
+          const results = await cloudinary.uploader.upload(req.file.path);
+          const newTeacher =  TeachersModel({...req.body, imagen: results.secure_url})
           const savedTeacher = await newTeacher.save();
           res.status(201).json({ msg: 'Producto creado con exito', savedTeacher })
 

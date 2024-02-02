@@ -13,6 +13,9 @@ const ProductsSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    imagen: {
+      type: String,
+    },
   })
   
   const ProductsModel = mongoose.model('products', ProductsSchema)
