@@ -22,10 +22,7 @@ const UsersSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'clases',
   },
-  Comentario: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Comentarios'
-  }],
+  Comentario: [String],
 
 })
 
