@@ -113,7 +113,15 @@ const UpdateUser = async (req,res)=>{
     }
 }
 
-
+const GetComment = async (req,res)=>{
+    try {
+        const Comment = await UsersModel.findOne({_id:req.params.id})
+        const comentario= Comment.Comentario
+        res.status(200).json({ msg: 'Comentario encontrado', comentario})
+    } catch (error) {
+        res.status(500).json({ msg: 'Falla en el server', error })
+    }
+}
 
 module.exports = { 
     CreateUser,
@@ -122,4 +130,5 @@ module.exports = {
     DeleteUser, 
     UpdateUser, 
     LoginUser,
+    GetComment,
 }
