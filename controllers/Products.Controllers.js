@@ -1,4 +1,5 @@
 const ProductsModel = require("../models/Products.Schema")
+const cloudinary = require('../helpers/cloudinary')
 
 const createProduct = async (req, res) => {
   try {
@@ -9,7 +10,8 @@ const createProduct = async (req, res) => {
       res.status(400).json({ msg: 'Algun campo esta vacio' })
       return
     }
-    const newProduct = new ProductsModel({ ...req.body})
+    const results = await cloudinary.uploader.upload(req.file.path);
+    const newProduct = new ProductsModel({ ...req.body, imagen: results.secure_url })
     await newProduct.save()
     res.status(201).json({ msg: 'Producto creado con exito', newProduct })
   } catch (error) {

@@ -1,11 +1,12 @@
 const ClassModel = require('../models/Class.Schema')
 const UsersModel = require('../models/Users.Schema')
 const mongoose = require('mongoose');
-
+const cloudinary = require('../helpers/cloudinary')
 
 const createClass = async (req, res) => {
     try {  
-      const newClass = new ClassModel({ ...req.body})
+        const results = await cloudinary.uploader.upload(req.file.path);
+      const newClass = new ClassModel({ ...req.body, imagen: results.secure_url})
       await newClass.save()
       res.status(201).json({ msg: 'Clase creada con exito', newClass })
     } catch (error) {

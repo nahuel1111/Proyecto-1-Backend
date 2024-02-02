@@ -43,6 +43,9 @@ const ClaseSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  imagen: {
+    type: String,
+  },
   Usuarios: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'users'
