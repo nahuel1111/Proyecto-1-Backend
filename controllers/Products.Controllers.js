@@ -39,8 +39,8 @@ const getOneProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-
-    const updateProduct = await ProductsModel.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
+    const results = await cloudinary.uploader.upload(req.file.path);
+    const updateProduct = await ProductsModel.findByIdAndUpdate({ _id: req.params.id }, { ...req.body, imagen: results.secure_url }, { new: true })
     res.status(200).json({ msg: 'Producto Actualizado', updateProduct })
 
   } catch (error) {
