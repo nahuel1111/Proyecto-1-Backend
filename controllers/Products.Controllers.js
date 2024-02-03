@@ -3,7 +3,7 @@ const cloudinary = require('../helpers/cloudinary')
 
 const createProduct = async (req, res) => {
   try {
-
+   
     const { titulo, precio, descripcion } = req.body
 
     if (!titulo || !precio || !descripcion) {
@@ -39,6 +39,11 @@ const getOneProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
+    if (!req.file) {
+      console.log(req.file)
+      res.status(400).json({ msg: 'No se proporcionó un archivo para actualizar la imagen' });
+      return;
+    }
     const results = await cloudinary.uploader.upload(req.file.path);
     const updateProduct = await ProductsModel.findByIdAndUpdate({ _id: req.params.id }, { ...req.body, imagen: results.secure_url }, { new: true })
     res.status(200).json({ msg: 'Producto Actualizado', updateProduct })
