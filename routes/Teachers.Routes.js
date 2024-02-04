@@ -7,7 +7,7 @@ const multer = require('../middlewars/multer')
 route.post('/', multer.single('imagen'), createTeacher)
 route.get('/', GetTeachers)
 route.get('/:id', GetOneTeacher)
-route.put('/:id', UpdateTeacher)
+route.put('/:id', multer.single('imagen'), UpdateTeacher)
 route.delete('/:id', DeleteTeacher)
 
 

@@ -38,7 +38,8 @@ const GetOneTeacher = async (req,res)=>{
 
 const UpdateTeacher = async (req,res)=>{
     try {
-        const Update = await TeachersModel.findByIdAndUpdate({ _id:req.params.id },req.body,{new:true})
+        const results = await cloudinary.uploader.upload(req.file.path);
+        const Update = await TeachersModel.findByIdAndUpdate({ _id:req.params.id },{...req.body, imagen: results.secure_url},{new:true})
         res.status(200).json({msg: 'Profesor Actualizado', Update })
     } catch (error) {
         res.status(500).json({ msg: 'Falla en el server', error })
