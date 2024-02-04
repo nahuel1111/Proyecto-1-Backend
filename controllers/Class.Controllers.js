@@ -37,6 +37,11 @@ const GetOneClass = async (req,res)=>{
 
 const UpdateClass = async (req,res)=>{
     try {
+    if(!req.file){
+        const Update = await ClassModel.findByIdAndUpdate({ _id:req.params.id }, req.body,{new:true})
+        res.status(200).json({msg: 'Clase Actualizada', Update })    
+    return
+    }
         const results = await cloudinary.uploader.upload(req.file.path);
         const Update = await ClassModel.findByIdAndUpdate({ _id:req.params.id },{ ...req.body, imagen: results.secure_url},{new:true})
         res.status(200).json({msg: 'Clase Actualizada', Update })
