@@ -27,8 +27,9 @@ const ClaseSchema = new mongoose.Schema({
   },
   Usuarios: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'users'
-  }],
+    ref: 'users',
+  }
+],
   IDProfesor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'teachers'

@@ -72,22 +72,34 @@ const addUsuarioToClase = async (req, res) => {
             return res.status(400).json({ msg: 'El ID del usuario proporcionado no es válido' });
         }
         const userExist = await UsersModel.findOne({_id:req.body.Usuarios})
-        console.log(userExist)
         if(!userExist){
          return   res.status(400).json({ msg: 'el id de usuario que intentas agregar no existe en la base de datos' })
         }
-        const clase = await ClassModel.findByIdAndUpdate(
-            req.params.id,
-            { $addToSet: { Usuarios: req.body.Usuarios } },
-            { new: true }
-        )
+  
+            const clase = await ClassModel.findByIdAndUpdate(
+                req.params.id,
+                { $addToSet: { Usuarios: req.body.Usuarios } },
+                { new: true }
+            )
+    
+        
+            const fecha = await UsersModel.findByIdAndUpdate(
+                req.body.Usuarios,
+                { $addToSet: { fechainicio: req.body.fechainicio, fechafinal: req.body.fechafinal } },
+           
+                { new: true }
+            )
+            return    res.status(200).json({ msg: 'Usuario agregado correctamente', clase });
+
+
+      
 
 
 
 
 
 
-        res.status(200).json({ msg: 'Usuario agregado correctamente', clase });
+       
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: 'Falla en el server', error: error.message });
@@ -107,7 +119,15 @@ const DeleteUserToClass = async (req,res)=>{
             req.params.id,
             { $pull: { Usuarios: req.body.Usuarios } },
             { new: true }
-        );
+        )
+        const user = await UsersModel.findByIdAndUpdate(
+            req.body.Usuarios,
+            { 
+                fechainicio: null,
+                fechafinal: null
+            },
+            { new: true }
+        )
 
   res.status(200).json({ msg: 'Usuario eliminado correctamente', clase });
     } catch (error) {

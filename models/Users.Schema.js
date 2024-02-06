@@ -22,6 +22,14 @@ const UsersSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'clases',
   },
+  fechainicio:{
+    type: Date,
+
+  },
+  fechafinal:{
+    type: Date,
+
+  },
   Comentario: [String],
 
 })
