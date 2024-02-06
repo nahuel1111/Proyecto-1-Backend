@@ -28,13 +28,33 @@ try {
 }
 
 
+const getComment = async (req,res)=>{
+    try {
+        const commentUser = await CommentModel.find({idUser:req.params.id})
+        res.status(200).json({ msg: 'Comentario encontrado', commentUser})
 
 
+    } catch (error) {
+        res.status(500).json({ msg: 'Falla en el server', error })
+    }
+}
 
+const updateComment = async (req,res)=>{
+    try {
+        const UpdateComment = await CommentModel.findByIdAndUpdate( req.params.id ,req.body, { new: true })
+        res.status(200).json({ msg: 'Comentario destacado', UpdateComment})
+
+    } catch (error) {
+        res.status(500).json({ msg: 'Falla en el server', error })
+    }
+}
 
 
 
 
 module.exports={
     createComment,
+    getComment,
+    updateComment,
+
 }

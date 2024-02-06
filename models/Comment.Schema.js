@@ -12,8 +12,8 @@ const commentSchema =  new mongoose.Schema({
         ref: 'users',
       },
     Destacado:{
-        type:Boolean,
-        default:false
+        type:String,
+        default:"false",
     },
 })
 
