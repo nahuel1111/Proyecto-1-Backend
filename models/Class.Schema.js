@@ -10,7 +10,6 @@ const ClaseSchema = new mongoose.Schema({
     type: String,
     required: true
   },
- 
   Descripcion: {
     type: String,
     required: true
