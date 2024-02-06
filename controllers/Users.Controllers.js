@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken')
 
 
 const CreateUser = async (req,res)=>{
-    const {nombreUsuario, emailUsuario, contrasenia, role}= req.body
+    const {nombreUsuario, emailUsuario, contrasenia}= req.body
     try {
-        if (!nombreUsuario || !emailUsuario || !contrasenia || !role) {
+        if (!nombreUsuario || !emailUsuario || !contrasenia) {
             res.status(400).json({ msg: 'Algun campo esta vacio' })
             return
           }
