@@ -123,11 +123,13 @@ const DeleteUserToClass = async (req,res)=>{
         const user = await UsersModel.findByIdAndUpdate(
             req.body.Usuarios,
             { 
-                fechainicio: null,
-                fechafinal: null
+                $unset: { fechainicio: "", fechafinal: "" }
             },
             { new: true }
         )
+
+
+       
 
   res.status(200).json({ msg: 'Usuario eliminado correctamente', clase });
     } catch (error) {
