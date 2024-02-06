@@ -1,5 +1,6 @@
 const ClassModel = require('../models/Class.Schema')
 const UsersModel = require('../models/Users.Schema')
+const TeachersModel = require('../models/Teachers.Schema')
 const mongoose = require('mongoose');
 const cloudinary = require('../helpers/cloudinary')
 
@@ -66,7 +67,6 @@ const addUsuarioToClase = async (req, res) => {
             return res.status(400).json({ msg: 'El ID del usuario proporcionado no es válido' });
         }
         const userExist = await UsersModel.findOne({_id:req.body.Usuarios})
-        console.log(userExist)
         if(!userExist){
          return   res.status(400).json({ msg: 'el id de usuario que intentas agregar no existe en la base de datos' })
         }
@@ -110,6 +110,55 @@ const DeleteUserToClass = async (req,res)=>{
     }
 }
 
+const addUsuarioToTeacher = async (req,res)=>{
+    try {
+        if (!mongoose.Types.ObjectId.isValid(req.body.IDProfesor)) {
+            return res.status(400).json({ msg: 'El ID del profesor proporcionado no es válido' });
+        }
+        const teacherExist = await TeachersModel.findOne({_id:req.body.IDProfesor})
+       
+        if(!teacherExist){
+         return   res.status(400).json({ msg: 'el id de usuario que intentas agregar no existe en la base de datos' })
+        }
+        const teacher = await ClassModel.findByIdAndUpdate(
+            req.params.id,
+            { $addToSet: { IDProfesor: req.body.IDProfesor } },
+            { new: true }
+        )
+
+
+
+
+
+
+        res.status(200).json({ msg: 'profesor agregado correctamente', teacher });
+    } catch (error) {
+        res.status(500).json({ msg: 'Falla en el server', error: error.message });
+    }
+}
+
+const DeleteTeacherToClass = async (req,res)=>{
+    try {
+        if (!mongoose.Types.ObjectId.isValid(req.body.IDProfesor)) {
+            return res.status(400).json({ msg: 'El ID del profesor proporcionado no es válido' });
+        }
+        const teacherExist = await TeachersModel.findOne({_id:req.body.IDProfesor})
+        if(!teacherExist){
+          return  res.status(400).json({ msg: 'el id de profesor que intentas eliminar no existe en la base de datos' })
+        }
+        const teacher = await ClassModel.findByIdAndUpdate(
+            req.params.id,
+            { $pull: { IDProfesor: req.body.IDProfesor } },
+            { new: true }
+        );
+
+  res.status(200).json({ msg: 'profesor eliminado correctamente', teacher });
+    } catch (error) {
+            res.status(500).json({ msg: 'Falla en el server', error: error.message });
+        
+    }
+}
+
 
 
 module.exports = {
@@ -120,5 +169,7 @@ module.exports = {
     DeleteClass,
     addUsuarioToClase,
     DeleteUserToClass,
+    addUsuarioToTeacher,
+    DeleteTeacherToClass,
 
   }

@@ -11,26 +11,6 @@ const ClaseSchema = new mongoose.Schema({
     required: true
   },
  
-  Lista1: {
-    type: String, 
-    required: true
-  },
-  Lista2: {
-    type: String,
-    required: true
-  },
-  Lista3: {
-    type: String,
-    required: true
-  },
-  Lista4: {
-    type: String,
-    required: true
-  },
-  Lista5: {
-    type: String,
-    required: true
-  },
   Descripcion: {
     type: String,
     required: true
