@@ -9,7 +9,8 @@ const auth = ( role ) => async(req, res, next) =>{
      res.status(400).json({msg:'Token Incorrecto'})
    }
 
-   const verify = jwt.verify(token, "Grupo1")
+   const verify = jwt.verify(token, process.env.SECRET_KEY)
+
 
    if(verify && verify.role === role){
    

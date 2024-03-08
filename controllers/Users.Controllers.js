@@ -47,7 +47,7 @@ const LoginUser = async (req,res)=>{
             role: EmailExist.role
           }
       
-          const token = jwt.sign(payload, "Grupo1")
+          const token = jwt.sign(payload, process.env.SECRET_KEY)
           res.status(200).json({msg:'Logueado', token, role: EmailExist.role, idUsuario: EmailExist._id})
         
     } catch (error) {
