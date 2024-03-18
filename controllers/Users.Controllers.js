@@ -13,7 +13,7 @@ const CreateUser = async (req,res)=>{
             return
           }
 
-          const NewUser =  UsersModel({...req.body})
+          const NewUser = new UsersModel({...req.body})
 
           const salt = bcryptjs.genSaltSync(10)
           NewUser.contrasenia = bcryptjs.hashSync(contrasenia, salt)
