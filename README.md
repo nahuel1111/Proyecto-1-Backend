@@ -1,6 +1,6 @@
 # Introducción al Backend
 
-![Back-End](../Proyecto-Gym-Grupo-1/src/assets/Img/Logo-Gym.jpg)
+![Back-End](https://github.com/nahuel1111/Proyecto-1-Backend/blob/master/Back-End.jpg)
 
 ¡Bienvenido al repositorio del backend de nuestro proyecto! En este archivo encontrarás toda la información necesaria para comprender y colaborar en el desarrollo del backend.
 
@@ -44,13 +44,13 @@ Cada una de estas carpetas cumple un papel específico en la estructura y funcio
 
 ## -- Creadores del Proyecto --
 
-   - ![Nahuel Ricardo Pumara](https://github.com/nahuel1111)
+   - ![Nahuel Ricardo Pumara - GitHub](https://github.com/nahuel1111)
         ° **Correo electronico** :: ricardo-nahuel@hotmail.com
         ° **Redes sociales**    
             `Instagram`: (https://www.instagram.com/nahuel__rp/)
             `Linkedin`: (https://www.linkedin.com/in/ricardo-nahuel-pumara-0b3aab272/)
 
-   - ![Cesar Hermida Cordaro](https://github.com/CesarHerm)
+   - ![Cesar Hermida Cordaro - GitHub](https://github.com/CesarHerm)
         ° **Correo electronico** :: cesar.hermida.cordaro@gmail.com 
         ° **Redes sociales**
             `Instagram`: (https://www.instagram.com/_cesarher/)
